@@ -1,7 +1,7 @@
 package com.github.mcnew.user.controller.response;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import com.github.mcnew.user.model.Role;
 
@@ -25,13 +25,12 @@ public class RoleViewFull {
 		this.description = role.getDescription();
 		this.created = role.getCreated().toString();
 		this.updated = role.getUpdated().toString();
-		this.permissions = new ArrayList<>();
-		role.getPermissions().forEach(entity -> {
+		this.permissions = role.getPermissions().stream().map(entity -> {
 			PairParameterResponseFull pair = new PairParameterResponseFull();
 			pair.setId(entity.getId());
 			pair.setName(entity.getName());
-			this.permissions.add(pair);
-		});
+			return pair;
+		}).collect(Collectors.toList());
 	}
 
 	public Integer getId() {
