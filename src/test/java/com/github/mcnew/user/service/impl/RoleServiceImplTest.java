@@ -3,28 +3,30 @@ package com.github.mcnew.user.service.impl;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import com.github.mcnew.user.controller.request.PairParameterRequest;
 import com.github.mcnew.user.controller.request.RoleRequestCreate;
 import com.github.mcnew.user.controller.request.RoleRequestUpdate;
 import com.github.mcnew.user.controller.response.RoleViewFull;
 import com.github.mcnew.user.controller.response.RoleViewSimple;
 import com.github.mcnew.user.model.Role;
+import com.github.mcnew.user.repository.RolePermissionRepository;
 import com.github.mcnew.user.repository.RoleRepository;
 import com.github.mcnew.user.service.RoleService;
 import com.github.mcnew.user.utility.RoleUtil;
 
 public class RoleServiceImplTest {
 
-	@Autowired
 	private RoleRepository repository;
 
-	@Autowired
+	private RolePermissionRepository relRepository;
+
 	private RoleService service;
 
 	@BeforeEach
@@ -41,7 +43,9 @@ public class RoleServiceImplTest {
 		Mockito.when(repository.save(Mockito.any()))
 				.thenReturn(RoleUtil.buildEntity(1000, "Yonce", "Yonce description"));
 
-		service = new RoleServiceImpl(repository);
+		relRepository = Mockito.mock(RolePermissionRepository.class);
+
+		service = new RoleServiceImpl(repository, relRepository);
 	}
 
 	@Test
@@ -84,8 +88,14 @@ public class RoleServiceImplTest {
 		RoleRequestCreate request = new RoleRequestCreate();
 		request.setName("Eyi");
 		request.setDescription("Eyi Description");
+		request.setPermissions(Arrays.asList(1, 2).stream().map(idPermission -> {
+			PairParameterRequest pair = new PairParameterRequest();
+			pair.setId(idPermission);
+			return pair;
+		}).collect(Collectors.toList()));
 		Assertions.assertEquals(Integer.valueOf(1000), service.save(request));
 		Mockito.verify(repository, Mockito.times(1)).save(Mockito.any());
+		Mockito.verify(relRepository, Mockito.times(2)).save(Mockito.any());
 	}
 
 }
