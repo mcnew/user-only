@@ -10,7 +10,7 @@ import com.github.mcnew.user.controller.response.PermissionViewSimple;
 
 public interface PermissionService {
 
-	Integer create(PermissionRequestCreate request);
+	Integer save(PermissionRequestCreate request);
 
 	boolean update(Integer id, PermissionRequestUpdate request);
 

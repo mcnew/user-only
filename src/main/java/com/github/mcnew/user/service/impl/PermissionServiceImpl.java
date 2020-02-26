@@ -27,7 +27,7 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public Integer create(PermissionRequestCreate request) {
+	public Integer save(PermissionRequestCreate request) {
 		Permission entity = new Permission();
 		entity.setName(request.getName());
 		entity.setDescription(request.getDescription());
