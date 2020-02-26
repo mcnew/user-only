@@ -20,7 +20,7 @@ class UserOnlyApplicationTests {
 	void contextLoads() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/permissions")).andDo(MockMvcResultHandlers.print())
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().contentType("application/json; charset=UTF-8"));
+				.andExpect(MockMvcResultMatchers.content().json("[]"));
 	}
 
 }
