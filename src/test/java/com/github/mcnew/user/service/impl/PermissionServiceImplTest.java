@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.github.mcnew.user.configuration.PermissionTestConfiguration;
+import com.github.mcnew.user.configuration.PermissionRepositoryTestConfiguration;
 import com.github.mcnew.user.controller.request.PermissionRequestCreate;
 import com.github.mcnew.user.controller.request.PermissionRequestUpdate;
 import com.github.mcnew.user.controller.response.PermissionViewFull;
@@ -24,7 +24,7 @@ import com.github.mcnew.user.service.PermissionService;
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = { PermissionTestConfiguration.class,
+@ContextConfiguration(classes = { PermissionRepositoryTestConfiguration.class,
 		PermissionServiceImpl.class }, inheritLocations = false)
 public class PermissionServiceImplTest {
 

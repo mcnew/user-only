@@ -15,7 +15,7 @@ import com.github.mcnew.user.repository.PermissionRepository;
 
 @Profile("test")
 @Configuration
-public class PermissionTestConfiguration {
+public class PermissionRepositoryTestConfiguration {
 
 	@Bean
 	@Primary
