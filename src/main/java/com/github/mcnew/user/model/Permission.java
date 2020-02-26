@@ -13,10 +13,10 @@ import javax.validation.constraints.NotNull;
 public class Permission {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(updatable = false)
+	@Column(updatable = false, unique = true)
 	@NotNull
 	private String name;
 
