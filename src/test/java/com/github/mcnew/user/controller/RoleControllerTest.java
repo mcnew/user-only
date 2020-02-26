@@ -12,29 +12,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.github.mcnew.user.controller.request.PermissionRequestCreate;
-import com.github.mcnew.user.controller.request.PermissionRequestUpdate;
-import com.github.mcnew.user.controller.response.PermissionViewFull;
-import com.github.mcnew.user.service.PermissionService;
+import com.github.mcnew.user.controller.request.RoleRequestCreate;
+import com.github.mcnew.user.controller.request.RoleRequestUpdate;
+import com.github.mcnew.user.controller.response.RoleViewFull;
+import com.github.mcnew.user.service.RoleService;
 import com.github.mcnew.user.test.configuration.TConf;
-import com.github.mcnew.user.utility.PermissionUtil;
+import com.github.mcnew.user.utility.RoleUtil;
 
 @SpringBootTest
 @ContextConfiguration(classes = TConf.class)
-public class PermissionControllerTest {
+public class RoleControllerTest {
 
-	private PermissionController controller;
+	private RoleController controller;
 
 	@BeforeEach
 	public void setUp() {
-		PermissionService service = Mockito.mock(PermissionService.class);
+		RoleService service = Mockito.mock(RoleService.class);
 
-		Mockito.when(service.read(1)).thenReturn(Optional
-				.of(new PermissionViewFull(PermissionUtil.buildEntity(1, "Ce", "Ce description", "0001", "1000"))));
+		Mockito.when(service.read(1))
+				.thenReturn(Optional.of(new RoleViewFull(RoleUtil.buildEntity(1, "Ce", "Ce description"))));
 		Mockito.when(service.save(Mockito.any())).thenReturn(1);
 		Mockito.when(service.update(Mockito.eq(1), Mockito.any())).thenReturn(true);
 
-		controller = new PermissionController(service);
+		controller = new RoleController(service);
 	}
 
 	@Test
@@ -63,11 +63,9 @@ public class PermissionControllerTest {
 
 	@Test
 	public void testPostOk() {
-		PermissionRequestCreate request = new PermissionRequestCreate();
+		RoleRequestCreate request = new RoleRequestCreate();
 		request.setName("vince");
 		request.setDescription("vince description");
-		request.setCodeA("8008");
-		request.setCodeB("0880");
 
 		ResponseEntity<?> response = controller.post(request);
 		Assertions.assertNotNull(response);
@@ -76,15 +74,13 @@ public class PermissionControllerTest {
 
 		URI location = response.getHeaders().getLocation();
 		Assertions.assertNotNull(location);
-		Assertions.assertTrue(location.toString().endsWith("/permissions/1"));
+		Assertions.assertTrue(location.toString().endsWith("/roles/1"));
 	}
 
 	@Test
 	public void testPutNotFound() {
-		PermissionRequestUpdate request = new PermissionRequestUpdate();
+		RoleRequestUpdate request = new RoleRequestUpdate();
 		request.setDescription("vince description");
-		request.setCodeA("8008");
-		request.setCodeB("0880");
 
 		ResponseEntity<?> response = controller.put(0, request);
 		Assertions.assertNotNull(response);
@@ -94,10 +90,8 @@ public class PermissionControllerTest {
 
 	@Test
 	public void testPutOk() {
-		PermissionRequestUpdate request = new PermissionRequestUpdate();
+		RoleRequestUpdate request = new RoleRequestUpdate();
 		request.setDescription("vince description");
-		request.setCodeA("8008");
-		request.setCodeB("0880");
 
 		ResponseEntity<?> response = controller.put(1, request);
 		Assertions.assertNotNull(response);
