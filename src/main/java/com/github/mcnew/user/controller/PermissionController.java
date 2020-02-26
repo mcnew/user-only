@@ -49,7 +49,7 @@ public class PermissionController {
 
 	@PostMapping(consumes = ControllerConst.CONTENT_TYPE_JSON)
 	public ResponseEntity<Void> post(@Validated @RequestBody PermissionRequestCreate request) {
-		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/permissions/{id}")
 				.buildAndExpand(service.save(request)).toUri()).build();
 	}
 
