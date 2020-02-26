@@ -3,8 +3,6 @@ package com.github.mcnew.user.service.impl;
 import java.util.Collection;
 import java.util.Optional;
 
-import javax.validation.ReportAsSingleViolation;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
