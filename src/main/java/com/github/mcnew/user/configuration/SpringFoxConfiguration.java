@@ -3,6 +3,7 @@ package com.github.mcnew.user.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.github.mcnew.user.controller.ControllerConst;
 import com.google.common.base.Predicates;
 
 import springfox.documentation.builders.PathSelectors;
@@ -18,7 +19,8 @@ public class SpringFoxConfiguration {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.any())
-				.paths(Predicates.or(PathSelectors.regex("/permissions(/.*)?"), PathSelectors.regex("/roles(/.*)?")))
+				.paths(Predicates.or(PathSelectors.regex(ControllerConst.URL_PERMISSIONS + "(/.*)?"),
+						PathSelectors.regex(ControllerConst.URL_ROLES + "(/.*)?")))
 				.build();
 	}
 
