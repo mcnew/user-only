@@ -1,58 +1,65 @@
 package com.github.mcnew.user.service.impl;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.github.mcnew.user.configuration.PermissionRepositoryTestConfiguration;
 import com.github.mcnew.user.controller.request.PermissionRequestCreate;
 import com.github.mcnew.user.controller.request.PermissionRequestUpdate;
 import com.github.mcnew.user.controller.response.PermissionViewFull;
 import com.github.mcnew.user.controller.response.PermissionViewSimple;
+import com.github.mcnew.user.model.Permission;
 import com.github.mcnew.user.repository.PermissionRepository;
 import com.github.mcnew.user.service.PermissionService;
+import com.github.mcnew.user.utility.PermissionUtil;
 
-@ActiveProfiles("test")
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
-@ContextConfiguration(classes = { PermissionRepositoryTestConfiguration.class,
-		PermissionServiceImpl.class }, inheritLocations = false)
 public class PermissionServiceImplTest {
 
-	@Autowired
 	private PermissionRepository repository;
 
-	@Autowired
 	private PermissionService service;
+
+	@BeforeEach
+	public void setUp() {
+		Permission ce = PermissionUtil.buildEntity(1, "Ce", "Ce description", "0001", "1000");
+		Permission ome = PermissionUtil.buildEntity(1, "Ome", "Ome description", "0002", "2000");
+
+		repository = Mockito.mock(PermissionRepository.class);
+		Mockito.when(repository.findAll()).thenReturn(Arrays.asList(ce, ome));
+
+		Mockito.when(repository.findById(1)).thenReturn(Optional.of(ce));
+		Mockito.when(repository.findById(2)).thenReturn(Optional.of(ome));
+
+		Mockito.when(repository.save(Mockito.any()))
+				.thenReturn(PermissionUtil.buildEntity(1000, "Yonce", "Yonce description", "0220", "2002"));
+
+		service = new PermissionServiceImpl(repository);
+	}
 
 	@Test
 	public void testRead0() {
 		Collection<PermissionViewSimple> list = service.read();
-		Assert.assertNotNull(list);
-		Assert.assertEquals(2, list.size());
+		Assertions.assertNotNull(list);
+		Assertions.assertEquals(2, list.size());
 	}
 
 	@Test
 	public void testRead1Present() {
 		Optional<PermissionViewFull> optional = service.read(1);
-		Assert.assertNotNull(optional);
-		Assert.assertTrue(optional.isPresent());
+		Assertions.assertNotNull(optional);
+		Assertions.assertTrue(optional.isPresent());
 	}
 
 	@Test
 	public void testRead1NotPresent() {
 		Optional<PermissionViewFull> optional = service.read(0);
-		Assert.assertNotNull(optional);
-		Assert.assertFalse(optional.isPresent());
+		Assertions.assertNotNull(optional);
+		Assertions.assertFalse(optional.isPresent());
 	}
 
 	@Test
@@ -61,8 +68,7 @@ public class PermissionServiceImplTest {
 		request.setDescription("alpha");
 		request.setCodeA("9000");
 		request.setCodeB("0009");
-		Assert.assertTrue(service.update(2, request));
-		System.out.println(service.read(2).get().getDescription());
+		Assertions.assertTrue(service.update(2, request));
 	}
 
 	@Test
@@ -71,7 +77,7 @@ public class PermissionServiceImplTest {
 		request.setDescription("alpha");
 		request.setCodeA("9000");
 		request.setCodeB("0009");
-		Assert.assertFalse(service.update(0, request));
+		Assertions.assertFalse(service.update(0, request));
 	}
 
 	@Test
@@ -81,7 +87,7 @@ public class PermissionServiceImplTest {
 		request.setDescription("Eyi Description");
 		request.setCodeA("5000");
 		request.setCodeB("0004");
-		Assert.assertEquals(Integer.valueOf(1000), service.save(request));
+		Assertions.assertEquals(Integer.valueOf(1000), service.save(request));
 		Mockito.verify(repository, Mockito.times(1)).save(Mockito.any());
 	}
 
