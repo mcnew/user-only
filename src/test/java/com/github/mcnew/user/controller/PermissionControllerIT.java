@@ -19,8 +19,13 @@ class PermissionControllerIT {
 	@Test
 	void testGet0() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/permissions")).andDo(MockMvcResultHandlers.print())
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().json("[]"));
+				.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().json("[]"));
+	}
+
+	@Test
+	void testGet() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders.get("/permissions/0")).andDo(MockMvcResultHandlers.print())
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 }
