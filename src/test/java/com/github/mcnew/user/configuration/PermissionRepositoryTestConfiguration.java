@@ -20,8 +20,8 @@ public class PermissionRepositoryTestConfiguration {
 	@Bean
 	@Primary
 	public PermissionRepository permissionRepository() {
-		Permission ce = permission(1, "Ce", "Ce description", "0001", "1000");
-		Permission ome = permission(1, "Ome", "Ome description", "0002", "2000");
+		Permission ce = buildEntity(1, "Ce", "Ce description", "0001", "1000");
+		Permission ome = buildEntity(1, "Ome", "Ome description", "0002", "2000");
 
 		PermissionRepository repository = Mockito.mock(PermissionRepository.class);
 		Mockito.when(repository.findAll()).thenReturn(Arrays.asList(ce, ome));
@@ -30,11 +30,11 @@ public class PermissionRepositoryTestConfiguration {
 		Mockito.when(repository.findById(2)).thenReturn(Optional.of(ome));
 
 		Mockito.when(repository.save(Mockito.any()))
-				.thenReturn(permission(1000, "Yonce", "Yonce description", "0220", "2002"));
+				.thenReturn(buildEntity(1000, "Yonce", "Yonce description", "0220", "2002"));
 		return repository;
 	}
 
-	Permission permission(Integer id, String name, String description, String codeA, String codeB) {
+	Permission buildEntity(Integer id, String name, String description, String codeA, String codeB) {
 		Permission entity = new Permission();
 		entity.setId(id);
 		entity.setName(name);
