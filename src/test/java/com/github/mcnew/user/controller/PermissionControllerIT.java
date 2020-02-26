@@ -17,7 +17,7 @@ class PermissionControllerIT {
 	private MockMvc mockMvc;
 
 	@Test
-	void contextLoads() throws Exception {
+	void testGet0() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/permissions")).andDo(MockMvcResultHandlers.print())
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().json("[]"));
