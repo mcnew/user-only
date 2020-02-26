@@ -35,15 +35,15 @@ public class PermissionRepositoryTestConfiguration {
 	}
 
 	Permission permission(Integer id, String name, String description, String codeA, String codeB) {
-		Permission permission = new Permission();
-		permission.setId(id);
-		permission.setName(name);
-		permission.setDescription(description);
-		permission.setCodeA(codeA);
-		permission.setCodeB(codeB);
-		permission.setCreated(new Timestamp(System.currentTimeMillis()));
-		permission.setUpdated(new Timestamp(System.currentTimeMillis()));
-		return permission;
+		Permission entity = new Permission();
+		entity.setId(id);
+		entity.setName(name);
+		entity.setDescription(description);
+		entity.setCodeA(codeA);
+		entity.setCodeB(codeB);
+		entity.setCreated(new Timestamp(System.currentTimeMillis()));
+		entity.setUpdated(new Timestamp(System.currentTimeMillis()));
+		return entity;
 	}
 
 }
