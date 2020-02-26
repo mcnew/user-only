@@ -4,19 +4,19 @@ import com.github.mcnew.user.model.Permission;
 
 public class PermissionViewFull {
 
-	private Integer id;
+	private final Integer id;
 
-	private String name;
+	private final String name;
 
-	private String description;
+	private final String description;
 
-	private String codeA;
+	private final String codeA;
 
-	private String codeB;
+	private final String codeB;
 
-	private String created;
+	private final String created;
 
-	private String updated;
+	private final String updated;
 
 	public PermissionViewFull(Permission permission) {
 		id = permission.getId();
@@ -32,56 +32,28 @@ public class PermissionViewFull {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public String getCodeA() {
 		return codeA;
-	}
-
-	public void setCodeA(String codeA) {
-		this.codeA = codeA;
 	}
 
 	public String getCodeB() {
 		return codeB;
 	}
 
-	public void setCodeB(String codeB) {
-		this.codeB = codeB;
-	}
-
 	public String getCreated() {
 		return created;
 	}
 
-	public void setCreated(String created) {
-		this.created = created;
-	}
-
 	public String getUpdated() {
 		return updated;
-	}
-
-	public void setUpdated(String updated) {
-		this.updated = updated;
 	}
 
 }
