@@ -2,6 +2,7 @@ package com.github.mcnew.user.service.impl;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -73,6 +74,7 @@ public class RoleServiceImplTest {
 	public void testUpdatePresent() {
 		RoleRequestUpdate request = new RoleRequestUpdate();
 		request.setDescription("alpha");
+		request.setPermissions(Collections.emptyList());
 		Assertions.assertTrue(service.update(2, request));
 	}
 
