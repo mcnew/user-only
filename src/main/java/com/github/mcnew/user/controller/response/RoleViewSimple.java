@@ -1,5 +1,7 @@
 package com.github.mcnew.user.controller.response;
 
+import java.util.Collection;
+
 import com.github.mcnew.user.model.Role;
 
 public class RoleViewSimple {
@@ -9,6 +11,8 @@ public class RoleViewSimple {
 	private final String name;
 
 	private final String updated;
+
+	private Collection<PairParameterResponseSimple> permissions;
 
 	public RoleViewSimple(Role role) {
 		this.id = role.getId();
@@ -26,6 +30,14 @@ public class RoleViewSimple {
 
 	public String getUpdated() {
 		return updated;
+	}
+
+	public Collection<PairParameterResponseSimple> getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(Collection<PairParameterResponseSimple> permissions) {
+		this.permissions = permissions;
 	}
 
 }
