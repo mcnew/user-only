@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -42,12 +41,10 @@ public class RoleServiceImpl implements RoleService {
 		entity.setDescription(request.getDescription());
 		entity = repository.save(entity);
 		Integer id = entity.getId();
-		request.getPermissions().stream().map(pair -> {
+		request.getPermissions().forEach(pair -> {
 			RolePermission rel = new RolePermission();
 			rel.setIdRole(id);
 			rel.setIdPermission(pair.getId());
-			return rel;
-		}).collect(Collectors.toList()).forEach(rel -> {
 			relRepository.save(rel);
 		});
 		return id;
@@ -61,6 +58,13 @@ public class RoleServiceImpl implements RoleService {
 			Role entity = optional.get();
 			entity.setDescription(request.getDescription());
 			repository.save(entity);
+			relRepository.deleteByRole(entity);
+			request.getPermissions().forEach(pair -> {
+				RolePermission rel = new RolePermission();
+				rel.setIdRole(id);
+				rel.setIdPermission(pair.getId());
+				relRepository.save(rel);
+			});
 			return true;
 		} else {
 			return false;
