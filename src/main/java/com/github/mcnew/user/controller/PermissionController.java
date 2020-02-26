@@ -24,6 +24,7 @@ import com.github.mcnew.user.service.PermissionService;
 @RestController
 @RequestMapping(path = "/permissions")
 public class PermissionController {
+
 	private final PermissionService service;
 
 	@Autowired
@@ -49,7 +50,7 @@ public class PermissionController {
 	@PostMapping(consumes = ControllerConst.CONTENT_TYPE_JSON)
 	public ResponseEntity<Void> post(@Validated @RequestBody PermissionRequestCreate request) {
 		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(service.create(request)).toUri()).build();
+				.buildAndExpand(service.save(request)).toUri()).build();
 	}
 
 	@PutMapping(path = "/{id}", consumes = ControllerConst.CONTENT_TYPE_JSON)
