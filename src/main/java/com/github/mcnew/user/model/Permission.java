@@ -1,12 +1,15 @@
 package com.github.mcnew.user.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -36,6 +39,11 @@ public class Permission {
 
 	@Column(insertable = false, updatable = false)
 	private Timestamp updated;
+
+	@ManyToMany(mappedBy = "permissions")
+	@NotNull
+	@NotEmpty
+	private List<Role> roles;
 
 	public Integer getId() {
 		return id;
@@ -91,6 +99,14 @@ public class Permission {
 
 	public void setUpdated(Timestamp updated) {
 		this.updated = updated;
+	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 }

@@ -4,19 +4,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.github.mcnew.user.controller.request.RoleRequestCreate;
 import com.github.mcnew.user.controller.request.RoleRequestUpdate;
 import com.github.mcnew.user.controller.response.RoleViewFull;
 import com.github.mcnew.user.controller.response.RoleViewSimple;
+import com.github.mcnew.user.model.Permission;
 import com.github.mcnew.user.model.Role;
-import com.github.mcnew.user.model.RolePermission;
-import com.github.mcnew.user.repository.RolePermissionRepository;
+import com.github.mcnew.user.repository.PermissionRepository;
 import com.github.mcnew.user.repository.RoleRepository;
 import com.github.mcnew.user.service.RoleService;
 
@@ -25,12 +28,12 @@ public class RoleServiceImpl implements RoleService {
 
 	private final RoleRepository repository;
 
-	private final RolePermissionRepository relRepository;
+	private final PermissionRepository permissionRepository;
 
 	@Autowired
-	public RoleServiceImpl(RoleRepository repository, RolePermissionRepository relRepository) {
+	public RoleServiceImpl(RoleRepository repository, PermissionRepository permissionRepository) {
 		this.repository = repository;
-		this.relRepository = relRepository;
+		this.permissionRepository = permissionRepository;
 	}
 
 	@Override
@@ -39,15 +42,17 @@ public class RoleServiceImpl implements RoleService {
 		Role entity = new Role();
 		entity.setName(request.getName());
 		entity.setDescription(request.getDescription());
+		entity.setPermissions(request.getPermissions().stream().map(pair -> {
+			Optional<Permission> optional = permissionRepository.findById(pair.getId());
+			if (optional.isPresent()) {
+				return optional.get();
+			} else {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+						"Permission id = " + pair.getId() + ": Does not exist");
+			}
+		}).collect(Collectors.toList()));
 		entity = repository.save(entity);
-		Integer id = entity.getId();
-		request.getPermissions().forEach(pair -> {
-			RolePermission rel = new RolePermission();
-			rel.setIdRole(id);
-			rel.setIdPermission(pair.getId());
-			relRepository.save(rel);
-		});
-		return id;
+		return entity.getId();
 	}
 
 	@Override
@@ -57,14 +62,16 @@ public class RoleServiceImpl implements RoleService {
 		if (optional.isPresent()) {
 			Role entity = optional.get();
 			entity.setDescription(request.getDescription());
+			entity.setPermissions(request.getPermissions().stream().map(pair -> {
+				Optional<Permission> temp = permissionRepository.findById(pair.getId());
+				if (temp.isPresent()) {
+					return temp.get();
+				} else {
+					throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+							"Permission id = " + pair.getId() + ": Does not exist");
+				}
+			}).collect(Collectors.toList()));
 			repository.save(entity);
-			relRepository.deleteByRole(entity);
-			request.getPermissions().forEach(pair -> {
-				RolePermission rel = new RolePermission();
-				rel.setIdRole(id);
-				rel.setIdPermission(pair.getId());
-				relRepository.save(rel);
-			});
 			return true;
 		} else {
 			return false;
