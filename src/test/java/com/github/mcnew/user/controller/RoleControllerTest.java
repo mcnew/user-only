@@ -74,7 +74,7 @@ public class RoleControllerTest {
 
 		URI location = response.getHeaders().getLocation();
 		Assertions.assertNotNull(location);
-		Assertions.assertTrue(location.toString().endsWith("/roles/1"));
+		Assertions.assertTrue(location.toString().endsWith(ControllerConst.URL_ROLES + "/1"));
 	}
 
 	@Test
