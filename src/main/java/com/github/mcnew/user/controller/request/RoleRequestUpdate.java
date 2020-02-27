@@ -1,6 +1,6 @@
 package com.github.mcnew.user.controller.request;
 
-import java.util.Collection;
+import java.util.Set;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ public class RoleRequestUpdate {
 
 	@NotNull
 	@NotEmpty
-	private Collection<PairParameterRequest> permissions;
+	private Set<PairParameterRequest> permissions;
 
 	public String getDescription() {
 		return description;
@@ -23,11 +23,11 @@ public class RoleRequestUpdate {
 		this.description = description;
 	}
 
-	public Collection<PairParameterRequest> getPermissions() {
+	public Set<PairParameterRequest> getPermissions() {
 		return permissions;
 	}
 
-	public void setPermissions(Collection<PairParameterRequest> permissions) {
+	public void setPermissions(Set<PairParameterRequest> permissions) {
 		this.permissions = permissions;
 	}
 

@@ -74,7 +74,7 @@ public class RoleServiceImplTest {
 	public void testUpdatePresent() {
 		RoleRequestUpdate request = new RoleRequestUpdate();
 		request.setDescription("alpha");
-		request.setPermissions(Collections.emptyList());
+		request.setPermissions(Collections.emptySet());
 		Assertions.assertTrue(service.update(2, request));
 	}
 
@@ -94,7 +94,7 @@ public class RoleServiceImplTest {
 			PairParameterRequest pair = new PairParameterRequest();
 			pair.setId(idPermission);
 			return pair;
-		}).collect(Collectors.toList()));
+		}).collect(Collectors.toSet()));
 		Assertions.assertEquals(Integer.valueOf(1000), service.save(request));
 		Mockito.verify(repository, Mockito.times(1)).save(Mockito.any());
 		Mockito.verify(relRepository, Mockito.times(2)).save(Mockito.any());
