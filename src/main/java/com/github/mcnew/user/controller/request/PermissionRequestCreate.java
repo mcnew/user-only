@@ -1,24 +1,24 @@
 package com.github.mcnew.user.controller.request;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class PermissionRequestCreate {
 
 	@NotNull
-	@NotEmpty
+	@Pattern(regexp = "^[a-zA-Z]+$")
 	private String name;
 
 	@NotNull
-	@NotEmpty
+	@Pattern(regexp = "^[-a-zA-Z 0-9.,ñ]+$")
 	private String description;
 
 	@NotNull
-	@NotEmpty
+	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String codeA;
 
 	@NotNull
-	@NotEmpty
+	@Pattern(regexp = "^[a-zA-Z0-9]+$")
 	private String codeB;
 
 	public String getName() {

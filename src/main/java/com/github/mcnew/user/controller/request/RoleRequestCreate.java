@@ -2,22 +2,26 @@ package com.github.mcnew.user.controller.request;
 
 import java.util.Set;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 public class RoleRequestCreate {
 
 	@NotNull
-	@NotEmpty
+	@Pattern(regexp = "^[a-zA-Z]+$")
 	private String name;
 
 	@NotNull
-	@NotEmpty
+	@Pattern(regexp = "^[-a-zA-Z 0-9.,ñ]+$")
 	private String description;
 
 	@NotNull
 	@NotEmpty
-	private Set<PairParameterRequest> permissions;
+	@Size(min = 1)
+	private Set<@Valid PairParameterRequest> permissions;
 
 	public String getName() {
 		return name;
