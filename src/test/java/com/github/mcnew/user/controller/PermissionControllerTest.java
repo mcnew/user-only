@@ -76,7 +76,7 @@ public class PermissionControllerTest {
 
 		URI location = response.getHeaders().getLocation();
 		Assertions.assertNotNull(location);
-		Assertions.assertTrue(location.toString().endsWith("/permissions/1"));
+		Assertions.assertTrue(location.toString().endsWith(ControllerConst.URL_PERMISSIONS + "/1"));
 	}
 
 	@Test
