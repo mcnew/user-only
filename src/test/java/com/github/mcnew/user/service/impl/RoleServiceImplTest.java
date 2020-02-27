@@ -17,8 +17,10 @@ import com.github.mcnew.user.controller.request.RoleRequestUpdate;
 import com.github.mcnew.user.controller.response.RoleViewFull;
 import com.github.mcnew.user.controller.response.RoleViewSimple;
 import com.github.mcnew.user.model.Role;
+import com.github.mcnew.user.repository.PermissionRepository;
 import com.github.mcnew.user.repository.RoleRepository;
 import com.github.mcnew.user.service.RoleService;
+import com.github.mcnew.user.utility.PermissionUtil;
 import com.github.mcnew.user.utility.RoleUtil;
 
 public class RoleServiceImplTest {
@@ -41,7 +43,14 @@ public class RoleServiceImplTest {
 		Mockito.when(repository.save(Mockito.any()))
 				.thenReturn(RoleUtil.buildEntity(1000, "Yonce", "Yonce description"));
 
-		service = new RoleServiceImpl(repository, null);
+		PermissionRepository permissionRepositor = Mockito.mock(PermissionRepository.class);
+
+		Mockito.when(permissionRepositor.findById(Mockito.eq(1)))
+				.thenReturn(Optional.of(PermissionUtil.buildEntity(1, "uno", "uno desc", "2222", "3333")));
+		Mockito.when(permissionRepositor.findById(Mockito.eq(2)))
+				.thenReturn(Optional.of(PermissionUtil.buildEntity(2, "dos", "dos desc", "2288", "3344")));
+
+		service = new RoleServiceImpl(repository, permissionRepositor);
 	}
 
 	@Test
