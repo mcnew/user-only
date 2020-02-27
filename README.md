@@ -50,4 +50,11 @@ Ejecutar como aplicacion spring-boot
 ### Eclipse
 
 Ejecutar como maven build, indicando en goals  __clean spring-boot:run__
- 
+
+## Ejecución
+
+Visitar la página de swagger, por defecto:
+
+    http://localhost:8080/swagger-ui.html
+
+El puerto puede verse afectado por el uso de la propiedad  __server.port__
