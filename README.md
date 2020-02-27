@@ -1,6 +1,7 @@
-#Como usar este proyecto
 
-##Pre-requisitos
+# Como usar este proyecto
+
+## Pre-requisitos
 
 - Software Requerido
     * MySQL 5.5 o Superior
@@ -10,11 +11,11 @@
     * Maven
     * Git
 
-##Código
+## Código
 
 Clonar el almacen utilizando el IDE o git directamente en la rama *master* 
 
-##Inicializacion Base de datos
+## Inicializacion Base de datos
 
 Si se requiere trabajar con un esquema y usuario nuevo.
     1. Crear el un esquema de base de datos para trabajar (Se recomienda "user0")
@@ -22,7 +23,7 @@ Si se requiere trabajar con un esquema y usuario nuevo.
     3. Asignar permisos a las tablas
     4. Recordar la contraseña
 
-##Configuración
+## Configuración
 
 Abrir el archivo [application.properties](src/main/resources/application.properties) y verificar si se requeiren modificar las propiedades siguientes
 - __spring.datasource.url:__ Verificar nombre del host, puerto y esquema.
@@ -31,9 +32,9 @@ Abrir el archivo [application.properties](src/main/resources/application.propert
 
 Opcionalmente, si el puerto 8080 esta ocupado. Agregar la propiedad  __server.port__  con el puerto requerido
 
-##Ejecución
+## Ejecución
 
-###Maven 
+### Maven 
 
 1.  Construir construir la aplicación
 
@@ -42,11 +43,11 @@ Opcionalmente, si el puerto 8080 esta ocupado. Agregar la propiedad  __server.po
 
     java -jar [./target/user-only-0.0.1-SNAPSHOT.jar](./target/user-only-0.0.1-SNAPSHOT.jar)
 
-###STS
+### STS
 
 Ejecutar como aplicacion spring-boot
 
-###Eclipse
+### Eclipse
 
 Ejecutar como maven build, indicando en goals  __clean spring-boot:run__
  
