@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.4.RELEASE</version>
+		<version>3.2.6</version>
 		<relativePath />
 	</parent>
 	<groupId>com.github.mcnew.user</groupId>
@@ -15,7 +15,8 @@
 	<name>user-only-web</name>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>25</java.version>
+		<maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -40,26 +41,24 @@
 			</exclusions>
 		</dependency>
 
+		<!-- Use springdoc for OpenAPI support (compatible with Spring Boot 3.x) -->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.1.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+			<version>8.1.0</version>
 			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
+			<version>2.7.2</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -67,6 +66,14 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<release>25</release>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
